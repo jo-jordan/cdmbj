@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.maoaixi.admin.Administrator" table="admin_user">
+		<!-- 唯一标识符 -->
+		<id name="adminid" column="adminid">
+			<generator class="native" />
+		</id>
+		<!-- 普通属性 -->
+		<property name="adminname" column="adminname" />
+		<property name="adminpassword" column="adminpassword" />
+	</class>
+</hibernate-mapping>

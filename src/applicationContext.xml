@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 将hibernate的配置整合进这里(不必额外配置hibernate.cfg.xml) -->
+
+
+
+	<!-- 引入外部jdbc.properties文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+	<!-- 配置连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- -->
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<!-- 配置hibernate5相关属性 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 注入连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- hibernate的其他相关属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connection.autocommit">false</prop>
+			</props>
+		</property>
+		<!-- 映射文件 -->
+		<property name="mappingResources">
+			<list>
+				<value>cn/maoaixi/user/vo/User.hbm.xml</value>
+				<value>cn/maoaixi/category/vo/Category.hbm.xml</value>
+				<value>cn/maoaixi/categorysecond/vo/CategorySecond.hbm.xml</value>
+				<value>cn/maoaixi/product/vo/Product.hbm.xml</value>
+				<value>cn/maoaixi/order/vo/Order.hbm.xml</value>
+				<value>cn/maoaixi/order/vo/OrderItem.hbm.xml</value>
+				<value>cn/maoaixi/cart/vo/UserCart.hbm.xml</value>
+				<value>cn/maoaixi/cart/vo/UserCartItem.hbm.xml</value>
+				<value>cn/maoaixi/admin/Administrator.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Spring声明式事务管理(使用aspectJ进行增强) start -->
+	<!-- 注册一个事务管理器 -->
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<!-- 注入以上声明的sessionFactory -->
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- 定义一个基于aspectJ的增强 -->
+	<!-- <tx:advice id="txAdvice" transaction-manager="txManager"> 增强的属性配置 <tx:attributes> 
+		<tx:method name="register"/> 一下属性均在tx:method标签中书写 isolation:DEFAULT :事务的隔离级别. 
+		propagation :事务的传播行为. read-only :false.不是只读 timeout :-1 no-rollback-for :发生哪些异常不回滚 
+		rollback-for :发生哪些异常回滚事务 </tx:attributes> </tx:advice> 整合增强+切点 <aop:config> 
+		定义切点:就是一个定义哪些需要增强的类的方法 <aop:pointcut expression="execution(* cn.maoaixi.user.service.UserService+.*(..))" 
+		id="registerPointcut"/> 定义切面:整合增强和切点advisor:一个切点对应一个增强,aspect,多对多 <aop:advisor 
+		advice-ref="txAdvice" pointcut-ref="registerPointcut"/> </aop:config> -->
+	<!-- Spring声明式事务管理(使用aspectJ进行增强) end -->
+
+	<!-- Spring声明式事务管理(使用注解方式增强) start -->
+	<tx:annotation-driven transaction-manager="txManager" />
+	<!-- Spring声明式事务管理(使用注解方式增强) end -->
+
+
+
+
+
+	<!-- Action配置 start -->
+	<!-- index访问的配置 -->
+	<bean id="indexAction" class="cn.maoaixi.index.action.IndexAction"
+		scope="prototype">
+		<property name="categoryService" ref="categoryService"></property>
+		<property name="productService" ref="productService"></property>
+	</bean>
+
+	<!-- user访问配置 -->
+	<bean id="userAction" class="cn.maoaixi.user.action.UserAction"
+		scope="prototype">
+		<property name="userService" ref="userService" />
+		<property name="cartItemService" ref="cartItemService" />
+	</bean>
+
+	<!-- 验证码的生成action配置 -->
+	<bean id="verCodeImg" class="cn.maoaixi.user.action.VerCodeImg"
+		scope="prototype"></bean>
+
+	<!-- 商品操作action配置 -->
+	<bean id="productAction" class="cn.maoaixi.product.action.ProductAction"
+		scope="prototype">
+		<property name="categorySecondService" ref="categorySecondService"></property>
+		<property name="productService" ref="productService"></property>
+	</bean>
+
+	<!-- 购物车相关action配置 -->
+	<bean id="cartAction" class="cn.maoaixi.cart.CartAction" scope="prototype">
+		<property name="productService" ref="productService" />
+		<property name="cartItemService" ref="cartItemService" />
+	</bean>
+
+	<!-- 订单相关action配置 -->
+	<bean id="orderAction" class="cn.maoaixi.order.action.OrderAction"
+		scope="prototype">
+		<property name="orderService" ref="orderService" />
+		<property name="cartItemService" ref="cartItemService" />
+	</bean>
+
+	<!-- 管理者 -->
+	<bean id="adminAction" class="cn.maoaixi.admin.AdministratorAction"
+		scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+
+	<!-- 一级分类管理 -->
+	<bean id="categoryAction" class="cn.maoaixi.category.action.CategoryAction"
+		scope="prototype">
+		<property name="categoryService" ref="categoryService"></property>
+	</bean>
+
+	<!-- 二级分类管理 -->
+	<bean id="categorySecondAction" class="cn.maoaixi.categorysecond.action.CategorySecondAction"
+		scope="prototype">
+		<property name="categoryService" ref="categoryService"></property>
+		<property name="categorySecondService" ref="categorySecondService"></property>
+	</bean>
+	<!-- Action配置 end -->
+
+
+
+
+
+	<!-- service访问配置 start -->
+	<!-- 对用户操作service的配置 -->
+	<bean id="userService" class="cn.maoaixi.user.service.UserServiceImpl"
+		scope="prototype">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<!-- 对第一分级查询的配置 -->
+	<bean id="categoryService" class="cn.maoaixi.category.service.CategoryServiceImpl"
+		scope="prototype">
+		<property name="categoryDao" ref="categoryDao"></property>
+	</bean>
+
+	<!-- 对热门,最新商品查询的配置 -->
+	<bean id="productService" class="cn.maoaixi.product.service.ProductServiceImpl"
+		scope="prototype">
+		<property name="productDao" ref="productDao"></property>
+	</bean>
+
+	<!-- 第二分级service -->
+	<bean id="categorySecondService"
+		class="cn.maoaixi.categorysecond.service.CategorySecondServiceImpl"
+		scope="prototype">
+		<property name="categorySecondDao" ref="categorySecondDao"></property>
+	</bean>
+
+	<!-- 订单操作service -->
+	<bean id="orderService" class="cn.maoaixi.order.service.OrderServiceImpl"
+		scope="prototype">
+		<property name="orderDao" ref="orderDao" />
+	</bean>
+
+	<!-- 购物车 -->
+	<bean id="cartItemService" class="cn.maoaixi.cart.service.CartItemService"
+		scope="prototype">
+		<property name="cartItemDao" ref="cartItemDao"></property>
+	</bean>
+
+	<!-- 管理者 -->
+	<bean id="adminService" class="cn.maoaixi.admin.AdministratorService"
+		scope="prototype">
+		<property name="adminDao" ref="adminDao"></property>
+	</bean>
+	<!-- service访问配置 end -->
+
+
+
+
+
+	<!-- dao访问配置 start -->
+	<bean id="userDao" class="cn.maoaixi.user.dao.UserDaoImpl" scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="categoryDao" class="cn.maoaixi.category.dao.CategoryDaoImpl"
+		scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="productDao" class="cn.maoaixi.product.dao.ProductDaoImpl"
+		scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="categorySecondDao" class="cn.maoaixi.categorysecond.dao.CategorySecondDaoImpl"
+		scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 订单操作dao -->
+	<bean id="orderDao" class="cn.maoaixi.order.dao.OrderDaoImpl"
+		scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 购物车 -->
+	<bean id="cartItemDao" class="cn.maoaixi.cart.dao.CartItemDao"
+		scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 管理者 -->
+	<bean id="adminDao" class="cn.maoaixi.admin.AdministratorDao"
+		scope="prototype">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- dao访问配置 end -->
+
+
+</beans>

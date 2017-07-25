@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.maoaixi.cart.vo.UserCartItem" table="user_cartitem">
+		<id name="uciid" column="uciid">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="subtotal" column="subtotal"></property>
+		<property name="count" column="count"></property>
+		<many-to-one name="product" class="cn.maoaixi.product.vo.Product"
+			column="pid" lazy="false"></many-to-one>
+		<many-to-one name="userCart" class="cn.maoaixi.cart.vo.UserCart"
+			column="ucid" lazy="false"></many-to-one>
+	</class>
+</hibernate-mapping>

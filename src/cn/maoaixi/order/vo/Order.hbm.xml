@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.maoaixi.order.vo.Order" table="user_order">
+		<id name="oid" column="oid">
+			<generator class="native"></generator>
+		</id>
+
+		<property name="total" column="total"></property>
+		<property name="ordertime" column="ordertime"></property>
+		<property name="state" column="state"></property>
+		<property name="addr" column="addr"></property>
+		<property name="consignee" column="consignee"></property>
+		<property name="phone" column="phone"></property>
+		<many-to-one name="user" class="cn.maoaixi.user.vo.User"
+			column="uid"></many-to-one>
+		<set name="orderItems" cascade="all" lazy="false">
+			<key column="oid"></key>
+			<one-to-many class="cn.maoaixi.order.vo.OrderItem" />
+		</set>
+	</class>
+</hibernate-mapping>

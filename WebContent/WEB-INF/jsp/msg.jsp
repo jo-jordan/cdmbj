@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>跳转页面...</title>
+<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="divcontent">
+		<table style="width: 850px; border: 0; cellspacing: 0;">
+			<tr>
+				<td style="padding: 30px; text-align: center">
+					<table style="width: 60%; border: 0; cellspacing: 0; margin-top: 70px">
+						<tr>
+							<td style="width: 98">
+								<img src="${pageContext.request.contextPath}/images/Icon_pic.jpg" width="128" height="128" />
+							</td>
+							<td style="padding-top: 30px">
+								<font style="font-weight: bold; color: #FF0000"><s:actionmessage /></font><br /> <br />
+								<a href="${ pageContext.request.contextPath }/index">首页</a>
+								<a href="${ pageContext.request.contextPath }/user_goRegisterPage">搞个账号玩玩</a>
+								<a href="${ pageContext.request.contextPath }/user_goLoginPage">搞了账号就去试试</a>
+
+							</td>
+
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
