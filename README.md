@@ -2,7 +2,7 @@
 	开发环境情况:macOS10.12.2,eclips neno.3,struts2.5,spring4.8,hibernate5.2,MySQL5.6
 	远程服务器:CentOS release 6.8 (Final)+MySQL5.6
 	项目网址在下方贴上
-		
+
 ## 项目内容:
 
 ### 前台模块功能
@@ -34,4 +34,4 @@
 
 
 [商城网址](http://47.94.168.8:8080/index)
-[商城管理网址](http://47.94.168.8:8080/admin/jsp/manage.jsp)
+[商城管理网址](http://47.94.168.8:8080/a/admin_goLogin)
