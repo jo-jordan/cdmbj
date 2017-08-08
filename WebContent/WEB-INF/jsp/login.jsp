@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>会员登录</title>
-<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/css/login.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
@@ -121,15 +120,9 @@
 </script>
 </head>
 <body>
-	<div class="container header">
-		<div class="span5">
-			<div class="logo"></div>
-		</div>
-		<div class="span9">
-			<div class="headerAd"></div>
-		</div>
+	
 		<%@ include file="header.jsp"%>
-	</div>
+
 	<div class="container login">
 		<div class="span12">
 			<div class="ad">

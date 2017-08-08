@@ -34,14 +34,33 @@ public class AdministratorAction extends ActionSupport {
 	/**************** 特殊字段提供区end **************/
 
 	/**************** action方法区 **************/
+	//去登录界面
+	public String goLogin(){
+		return "goLoginSuccess";
+	}
+	//去管理页面
+	public String goManagePage(){
+		return "goManagePageSuccess";
+	}
+	//管理员登录
 	public String login() {
 		Administrator admin = adminService.findAdminByName(adminname);
 		if(!admin.getAdminpassword().equals(adminpassword)){;
-			this.addActionError("管理员密码错误!!!!!!");
-			return "loginSuccess";
+			this.addActionMessage("管理员密码错误!!!!!!");
+			return "msg";
+		}
+		Administrator isExist = (Administrator) ServletActionContext.getRequest().getSession().getAttribute("adminUser");
+		if(isExist != null){
+			this.addActionMessage("您已登录,请勿重新登录!!!!!!");
+			return "msg";
 		}
 		ServletActionContext.getRequest().getSession().setAttribute("adminUser", admin);
 		return "loginSuccess";
+	}
+	//管理员退出登录
+	public String quit(){
+		ServletActionContext.getRequest().getSession().removeAttribute("adminUser");
+		return "quitSuccess";
 	}
 	/**************** action方法区end **************/
 

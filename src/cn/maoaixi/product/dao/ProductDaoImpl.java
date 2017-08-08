@@ -71,7 +71,7 @@ public class ProductDaoImpl extends HibernateDaoSupport implements ProductDao{
 	@Override
 	public List<Product> findAllProductByPage(int start, int limit) {
 		String hql = "from Product";
-		return this.getHibernateTemplate().execute(new PageHibernateUtils<>(hql,null,start,limit));
+		return this.getHibernateTemplate().execute(new PageHibernateUtils<Product>(hql,null,start,limit));
 	}
 
 	@SuppressWarnings("unchecked")

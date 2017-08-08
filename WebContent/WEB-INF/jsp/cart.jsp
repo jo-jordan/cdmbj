@@ -45,7 +45,6 @@ function changeCount(iptCount,pid){
 			<div class="logo"></div>
 		</div>
 		<%@ include file="header.jsp"%>
-		<%@ include file="menu.jsp"%>
 	</div>
 	<div class="container cart">
 		<div class="span24">

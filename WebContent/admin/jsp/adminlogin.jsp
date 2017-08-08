@@ -3,11 +3,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>ItcastShop 管理中心</title>
+<title>管理中心</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0 ,user-scalable=no,maximum-scale=1.0">
 <link href="${pageContext.request.contextPath }/css/general.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath }/css/main.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  line-height: 2.0;
+  color: #333333;
+  background-color: #ffffff;
+}
 header .header-stackup {
 	position: fixed;
 	width: 100%;
@@ -25,8 +33,8 @@ header .header-stackup {
 		<div class="header-stackup" data-scroll-reveal="enter from the top over 0.66s" data-scroll-reveal-initialized="true"
 			data-scroll-reveal-complete="true">商品后台管理</div>
 	</header>
-	<s:actionerror />
-	<form method="post" action="${pageContext.request.contextPath }/admin_login" name='theForm'>
+	
+	<form method="post" action="${pageContext.request.contextPath }/a/admin_login" name='theForm'>
 		<table style="margin-top: 100px;">
 			<tr>
 				<td style="padding-left: 50px">
@@ -55,5 +63,6 @@ header .header-stackup {
 		</table>
 		<input type="hidden" name="act" value="signin" />
 	</form>
+	<s:actionerror />
 </body>
 </head>

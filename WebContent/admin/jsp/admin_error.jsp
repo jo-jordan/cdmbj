@@ -8,18 +8,22 @@
 <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-
-	<%@ include file="header.jsp"%>
 	<div id="divcontent">
 		<table style="width: 850px; border: 0; cellspacing: 0;">
 			<tr>
 				<td style="padding: 30px; text-align: center">
 					<table style="width: 60%; border: 0; cellspacing: 0; margin-top: 70px">
 						<tr>
-							<td style="width: 98"><img src="${pageContext.request.contextPath}/images/Icon_pic.jpg" width="128" height="128" /></td>
-							<td style="padding-top: 30px"><font style="font-weight: bold; color: #FF0000"><s:actionmessage /></font><br /> <br /> <a href="${ pageContext.request.contextPath }/index">首页</a> <a
-								href="${ pageContext.request.contextPath }/user_goRegisterPage">搞个账号玩玩</a> <a href="${ pageContext.request.contextPath }/user_goLoginPage">搞了账号就去试试</a></td>
-
+							<td style="width: 98">
+								<img src="${pageContext.request.contextPath}/images/Icon_pic.jpg" width="128" height="128" />
+							</td>
+							<td style="padding-top: 30px">
+								<font style="font-weight: bold; color: #FF0000"><s:actionmessage /></font><br /> <br />
+								<p>内部出错...sorry,您可以去</p>								
+								<a href="${ pageContext.request.contextPath }/admin/jsp/manage.jsp">去管理其他项目</a>
+								<a href="${ pageContext.request.contextPath }/a/admin_goLogin">去重新登录</a>
+								
+							</td>
 						</tr>
 					</table>
 				</td>

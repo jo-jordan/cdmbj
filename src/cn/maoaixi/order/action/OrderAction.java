@@ -77,7 +77,7 @@ public class OrderAction extends ActionSupport {
 		order = orderService.findOrderByUid(user.getUid());
 		if(order != null){
 			if(order.getState() == 1){
-				this.addActionMessage("你还有没支付的订单,先交钱再玩好吗??????");
+				this.addActionMessage("你还有没支付的订单,请先支付!");
 				return "msg";
 			}
 		}

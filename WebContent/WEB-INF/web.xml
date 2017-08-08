@@ -10,6 +10,15 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
+	<!-- <filter>
+		<filter-name>JSPFilter</filter-name>
+		<filter-class>cn.maoaixi.utils.JSPFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>JSPFilter</filter-name>
+		
+		<url-pattern>/admin/jsp/manage.jsp</url-pattern>
+	</filter-mapping> -->
 	<filter>
 		<filter-name>struts2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>

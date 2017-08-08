@@ -32,13 +32,14 @@ header .header-stackup {
 		<div class="header-stackup" data-scroll-reveal="enter from the top over 0.66s" data-scroll-reveal-initialized="true"
 			data-scroll-reveal-complete="true">
 			<div>
-				<a href="${pageContext.request.contextPath}/user_manage">用户管理</a>
-				<a href="${pageContext.request.contextPath}/category_manage">一级分类管理</a>
-				<a href="${pageContext.request.contextPath}/categorySecond_manage">二级分类管理</a>
-				<a href="${pageContext.request.contextPath}/product_manage">商品管理</a>
-				<a href="${pageContext.request.contextPath}/order_manage">订单管理</a>
+				<a href="${pageContext.request.contextPath}/a/user_manage">用户管理</a>
+				<a href="${pageContext.request.contextPath}/a/category_manage">一级分类管理</a>
+				<a href="${pageContext.request.contextPath}/a/categorySecond_manage">二级分类管理</a>
+				<a href="${pageContext.request.contextPath}/a/product_manage">商品管理</a>
+				<a href="${pageContext.request.contextPath}/a/order_manage">订单管理</a>
 				当前用户:
 				<s:property value="#session.adminUser.adminname" />
+				<a href="${pageContext.request.contextPath}/a/admin_quit">退出登录</a>
 			</div>
 		</div>
 	</header>

@@ -5,14 +5,6 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>分类页面</title>
-<meta name="author" content="Mango Team" />
-<meta name="copyright" content="Mango" />
-<meta name="keywords" content="京华亿家--大冬瓜" />
-<meta name="description" content="京华亿家--大冬瓜" />
-<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/product.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="./js/jquery.js"></script>
-<script type="text/javascript" src="./js/common.js"></script>
 </head>
 <body>
 	<form action="${pageContext.request.contextPath }/cart_addToCart" method="post">
@@ -24,7 +16,6 @@
 				<div class="headerAd"></div>
 			</div>
 			<%@ include file="header.jsp"%>
-			<%@ include file="menu.jsp"%>
 		</div>
 		<div class="container productContent">
 			<s:iterator var="p" value="product">

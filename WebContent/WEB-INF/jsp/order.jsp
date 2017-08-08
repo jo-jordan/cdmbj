@@ -5,11 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>订单页面</title>
-<link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css" />
-<link href="${pageContext.request.contextPath}/css/cart.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/common.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/address.js"></script>
 <script type="text/javascript">
 	function checkNull() {
 		var useraddr = document.getElementById("useraddr").value;
@@ -81,7 +76,6 @@
 			</div>
 		</div>
 		<%@ include file="header.jsp"%>
-		<%@ include file="menu.jsp"%>
 	</div>
 	<s:debug></s:debug>
 	<div class="container cart">

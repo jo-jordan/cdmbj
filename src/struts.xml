@@ -19,13 +19,16 @@
 	<!-- 通知struts2运行时使用spring来创建对象 -->
 	<!-- <constant name="struts.objectFactory" value="spring"></constant> -->
 	<constant name="struts.multipart.maxSize" value="10485760" />
-	<package name="default" namespace="/" extends="struts-default">
+	<package name="shop_root" namespace="/" extends="struts-default">
 		<global-results>
 			<result name="msg">/WEB-INF/jsp/msg.jsp</result>
-			<result name="login">/admin/index.jsp</result>
+			<result name="error">/WEB-INF/jsp/error.jsp</result>
 		</global-results>
 		<global-allowed-methods>regex:.*</global-allowed-methods>
 
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
 		<!-- 添加index访问的action,将创建权交由spring -->
 		<action name="index" class="indexAction">
 			<result name="indexSuccess">/WEB-INF/jsp/index.jsp</result>
@@ -41,10 +44,6 @@
 			<result name="loginInput">/WEB-INF/jsp/login.jsp</result>
 			<result name="loginSuccess" type="redirectAction">index</result>
 			<result name="quitSuccess" type="redirectAction">index</result>
-			<result name="findAllUserSuccess">/admin/jsp/manageuser.jsp</result>
-			<result name="deleteUserByUidSuccess" type="redirectAction">user_manage
-			</result>
-			<result name="modifyUserSuccess" type="redirectAction">user_manage</result>
 		</action>
 
 		<!-- 验证码 -->
@@ -57,13 +56,6 @@
 			<result name="findCSByCidSuccess">/WEB-INF/jsp/category.jsp</result>
 			<result name="findProductByCsidSuccess">/WEB-INF/jsp/category.jsp</result>
 			<result name="findProductByPidSuccess">/WEB-INF/jsp/product_detail.jsp</result>
-			<result name="manageSuccess">/admin/jsp/manageproduct.jsp</result>
-			<result name="goModifyProductSuccess">/admin/jsp/manageproduct_modify.jsp</result>
-			<result name="addProductSuccess" type="redirectAction">product_manage</result>
-			<result name="deleteProductByPidSuccess" type="redirectAction">product_manage
-			</result>
-			<result name="modifyProductByPidSuccess" type="redirectAction">product_manage
-			</result>
 		</action>
 
 		<!-- 购物车 -->
@@ -87,32 +79,69 @@
 		</action>
 
 
+
+
+	</package>
+
+	<package name="shop_admin" namespace="/a" extends="struts-default">
+	
+		<interceptors>
+			<interceptor name="adminLoginInterceptor" class="cn.maoaixi.interceptor.AdminInterceptor"></interceptor>
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="adminLoginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		
+
+		<global-results>
+			<result name="msg">/admin/jsp/admin_msg.jsp</result>
+			<result name="error">/admin/jsp/admin_error.jsp</result>
+			<result name="login">/admin/jsp/adminlogin.jsp</result>
+		</global-results>
+		<global-allowed-methods>regex:.*</global-allowed-methods>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		<action name="user_*" class="userAction" method="{1}">
+			<interceptor-ref name="myDefaultStack" />
+			<result name="findAllUserSuccess">/admin/jsp/manageuser.jsp</result>
+			<result name="deleteUserByUidSuccess" type="redirectAction">user_manage</result>
+			<result name="modifyUserSuccess" type="redirectAction">user_manage</result>
+		</action>
+		<action name="product_*" class="productAction" method="{1}">
+			<interceptor-ref name="myDefaultStack" />
+			<result name="manageSuccess">/admin/jsp/manageproduct.jsp</result>
+			<result name="goModifyProductSuccess">/admin/jsp/manageproduct_modify.jsp</result>
+			<result name="addProductSuccess" type="redirectAction">product_manage</result>
+			<result name="deleteProductByPidSuccess" type="redirectAction">product_manage</result>
+			<result name="modifyProductByPidSuccess" type="redirectAction">product_manage</result>
+		</action>
+		<!-- 订单 -->
+		<action name="order_*" class="orderAction" method="{1}">
+			<interceptor-ref name="myDefaultStack" />
+		</action>
 		<!-- 管理者 -->
 		<action name="admin_*" class="adminAction" method="{1}">
-			<result name="loginSuccess" type="redirect">/admin/jsp/manage.jsp
-			</result>
+			<result name="goLoginSuccess">/admin/jsp/adminlogin.jsp</result>
+			<result name="loginSuccess" type="redirect">/admin/jsp/manage.jsp</result>
+			<result name="goManagePageSuccess">/admin/jsp/manage.jsp</result>
+			<result name="quitSuccess" type="redirectAction">admin_goLogin</result>
 		</action>
-
-
 		<!-- 一级分类 -->
 		<action name="category_*" class="categoryAction" method="{1}">
+			<interceptor-ref name="myDefaultStack" />
 			<result name="manageSuccess">/admin/jsp/managecategory.jsp</result>
-			<result name="deleteCategoryByCidSuccess" type="redirectAction">category_manage
-			</result>
-			<result name="addCategorySuccess" type="redirectAction">category_manage
-			</result>
+			<result name="deleteCategoryByCidSuccess" type="redirectAction">category_manage</result>
+			<result name="addCategorySuccess" type="redirectAction">category_manage</result>
 		</action>
-
 		<!-- 二级分类 -->
-		<action name="categorySecond_*" class="categorySecondAction"
-			method="{1}">
+		<action name="categorySecond_*" class="categorySecondAction" method="{1}">
+			<interceptor-ref name="myDefaultStack" />
 			<result name="manageSuccess">/admin/jsp/managecs.jsp</result>
-			<result name="deleteCategorySecondByCsidSuccess" type="redirectAction">categorySecond_manage
-			</result>
-			<result name="addCategorySecondSuccess" type="redirectAction">categorySecond_manage
-			</result>
-			<result name="modifyCategorySecondSuccess" type="redirectAction">categorySecond_manage
-			</result>
+			<result name="deleteCategorySecondByCsidSuccess" type="redirectAction">categorySecond_manage</result>
+			<result name="addCategorySecondSuccess" type="redirectAction">categorySecond_manage</result>
+			<result name="modifyCategorySecondSuccess" type="redirectAction">categorySecond_manage</result>
 		</action>
 	</package>
 </struts>
